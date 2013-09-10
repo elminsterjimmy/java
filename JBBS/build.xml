@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bbscs" default="dist" basedir=".">
+
+	<property name="src" location="bbscs-src" />
+	<property name="build" location="bbscs-build" />
+	<property name="dist" location="bbscs-dist" />
+	<property name="lib.dir" location="webapps-bbscs/root/WEB-INF/lib" />
+	<property name="weblib.dir" location="lib" />
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+	</target>
+
+	<path id="all-libs">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${weblib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="compile" depends="clean,init"
+		description="compile the source ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}" encoding="UTF-8">
+			<classpath refid="all-libs" />
+			<!--<compilerarg value="-Xlint:unchecked"/>-->
+			<!--<compilerarg value="-Xlint:all"/>-->
+		</javac>
+	</target>
+
+	<target name="instrument" depends="compile">
+    <taskdef name="instrument" classname="org.hibernate.tool.instrument.cglib.InstrumentTask">
+      <classpath refid="all-libs" />
+    </taskdef>
+    <instrument verbose="true">
+      <fileset dir="${build}">
+        <include name="com/laoer/bbscs/bean/UserDetail.class"/>
+        <include name="com/laoer/bbscs/bean/UserInfo.class"/>
+      </fileset>
+    </instrument>
+    </target>
+
+	<target name="copyother">
+		<copy todir="${build}">
+		<fileset dir="${src}">
+			<include name="**/*.xml"/>
+			<include name="**/*.txt"/>
+		</fileset>
+		</copy>
+	</target>
+
+	<target name="dist" depends="instrument,copyother"
+		description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}" />
+
+		<!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+		<jar jarfile="${dist}/bbscs8.jar" basedir="${build}" />
+	</target>
+
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+
+</project>
