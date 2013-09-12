@@ -1,3 +1,0 @@
-<web-app xmlns="http://caucho.com/ns/resin"> 
- <servlet-mapping url-pattern='*.bbscs' servlet-name='plugin_match'/>         
-</web-app>
