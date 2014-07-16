@@ -7,6 +7,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.elminster.retrieve.parser.GameParser;
 import com.elminster.retrieve.parser.GameSpotLinksParser;
@@ -19,6 +21,8 @@ import com.elminster.retrieve.parser.IGameSpotLinkParser;
  * @version 1.0
  */
 public abstract class GameRetriever extends BaseRetriever {
+  
+  private static final Log logger = LogFactory.getLog(GameRetriever.class);
 
   protected int startPage;
 
@@ -62,11 +66,11 @@ public abstract class GameRetriever extends BaseRetriever {
         String url = String.format(baseURL, i);
         method.setURI(new URI(url, false));
         client.executeMethod(method);
-        String response = method.getResponseBodyAsString();
         int status = method.getStatusCode();
         if (200 != status) {
-          System.err.println(url + ":" + status);
+          logger.warn(url + ":" + status);
         } else {
+          String response = method.getResponseBodyAsString();
           urlList.addAll(gamespotLinkParser.parserLinks(response));
         }
       }
