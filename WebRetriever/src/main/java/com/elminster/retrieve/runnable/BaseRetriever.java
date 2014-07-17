@@ -54,6 +54,11 @@ public abstract class BaseRetriever implements Runnable {
    * @return the URL
    */
   abstract protected List<String> getURL();
+  
+  /**
+   * Deal with the subject.
+   */
+  abstract protected void dealWithSubject(ISubject subject);
 
   /**
    * {@inheritDoc}
@@ -72,6 +77,7 @@ public abstract class BaseRetriever implements Runnable {
         } else {
           String response = method.getResponseBodyAsString();
           ISubject subject = subjectParser.parserSubject(response);
+          dealWithSubject(subject);
         }
         // deal with html
         Thread.sleep(delay);

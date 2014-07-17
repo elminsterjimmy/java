@@ -3,6 +3,8 @@ package com.elminster.retrieve.runnable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.elminster.retrieve.data.ISubject;
+
 /**
  * The movie retriever.
  * 
@@ -44,5 +46,11 @@ public class MovieRetriever extends BaseRetriever {
       list.add(String.format(URL, i));
     }
     return list;
+  }
+
+  @Override
+  protected void dealWithSubject(ISubject subject) {
+    // TODO Auto-generated method stub
+    
   }
 }

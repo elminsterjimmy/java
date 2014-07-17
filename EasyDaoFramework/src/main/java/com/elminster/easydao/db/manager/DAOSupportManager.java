@@ -17,7 +17,9 @@ import com.elminster.easydao.db.executor.ISqlExecutorFactory;
  * @version 1.0
  */
 public class DAOSupportManager {
-
+  
+  /** the instance. */
+  private static DAOSupportManager instance =  new DAOSupportManager();
 	/** the DAO cache. */
 	private Map<Class<?>, Object> daoCache = new HashMap<Class<?>, Object>();
 	/** the the SQL analyzer factory. */
@@ -30,13 +32,36 @@ public class DAOSupportManager {
 	/**
 	 * Constructor.
 	 */
-	protected DAOSupportManager(DAOSupportSession session) {
+	private DAOSupportManager() {
 		this.sqlAnalyzerFactory = DefaultSqlAnalyzerFactory.getInstance();
 		this.sqlExecutorFactory = DefaultSqlExecutorFactory.getInstance();
-		this.session = session;
 	}
 	
 	/**
+	 * Get the DAO support manager instance.
+	 * @return the instance
+	 */
+	public static DAOSupportManager getInstance() {
+	  return instance;
+	}
+	
+	/**
+	 * Get the session.
+	 * @return the session
+	 */
+	protected DAOSupportSession getSession() {
+    return session;
+  }
+
+	/**
+	 * Set the session.
+	 * @param session the session
+	 */
+  public void setSession(DAOSupportSession session) {
+    this.session = session;
+  }
+
+  /**
 	 * Set the SQL analyzer factory.
 	 * @param sqlAnalyzerFactory the SQL analyzer factory
 	 */
@@ -66,10 +91,9 @@ public class DAOSupportManager {
 		}
 		Object obj = daoCache.get(clazz);
 		if (null == obj) {
-			DAOInvokeHandler handler = new DAOInvokeHandler();
+			DAOInvokeHandler handler = new DAOInvokeHandler(this);
 			handler.setSqlAnalyzerFactory(sqlAnalyzerFactory);
 			handler.setSqlExecutorFactory(sqlExecutorFactory);
-			handler.setDAOSupportSession(session);
 			handler.setOriginalClass(clazz);
 			obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] {clazz}, handler);
 			daoCache.put(clazz, obj);

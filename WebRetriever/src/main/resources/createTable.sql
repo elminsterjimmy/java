@@ -40,8 +40,8 @@ CREATE TABLE t_game_pub
     pubId INT NOT NULL
 );
 
-drop table if exists `t_dev_info`;
-CREATE TABLE t_dev_info
+drop table if exists `t_dev_pub_info`;
+CREATE TABLE t_dev_pub_info
 (
     id int PRIMARY KEY AUTO_INCREMENT,
     name varchar (255) DEFAULT '' NOT NULL,
@@ -61,6 +61,21 @@ CREATE TABLE t_genres_info
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) DEFAULT '' NOT NULL
+);
+
+drop table if exists `t_game_relDate`;
+CREATE TABLE t_game_releaseDate
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    gameId INT NOT NULL,
+    relDateId INT NOT NULL
+);
+
+drop table if exists `t_releaseDate_info`;
+CREATE TABLE t_releaseDate_info
+(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    releaseDate date 
 );
 
 insert into t_platform_info (name) value ('PC');

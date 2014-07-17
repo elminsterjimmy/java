@@ -66,7 +66,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       session.beginTransaction();
       for (int i = 1; i <= 5; i++) {
@@ -96,7 +97,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       ORMBean condition = new ORMBean();
       PagedData pagedData = new PagedData(0, 3);
@@ -114,7 +116,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       ORMBean condition = new ORMBean();
       condition.setId(1);
@@ -137,7 +140,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       ORMBean condition = new ORMBean();
       condition.setId(6);
@@ -154,7 +158,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       String pass = dao.getPasswordByUserName("user1");
       System.out.println(pass);
@@ -174,7 +179,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       Double acc = dao.getAccountByUserName("user1");
       Assert.assertEquals(-1021.5, acc);
@@ -198,7 +204,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       double acc = dao.getAccountByCondition(1);
       Assert.assertEquals(-1021.5, acc);
@@ -216,7 +223,8 @@ public class EasyDaoTest {
         .getSessionManager().getSessionFactory(factoryId);
     DAOSupportSession session = factory.popDAOSupportSession();
     try {
-      DAOSupportManager manager = session.getDAOSupporManager();
+      DAOSupportManager manager = DAOSupportManager.getInstance();
+      manager.setSession(session);
       TestDao dao = (TestDao) manager.getDAO(TestDao.class);
       ORMBean bean = new ORMBean();
       bean.setName("user1");

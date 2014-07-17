@@ -45,7 +45,7 @@ public class GameParser implements ISubjectParser {
   private static final String XPATH_TO_GENRES = "dl[2]/dd[3]/a";
   
   private static final String FIRST_RELEASE_ON = "FIRST RELEASE ON ";
-  private static final String DATE_FORMATTING = "MMM d yyyy";
+  private static final String DATE_FORMATTING = "MMM d, yyyy";
 
   private static final Log logger = LogFactory.getLog(GameParser.class);
   
@@ -116,7 +116,7 @@ public class GameParser implements ISubjectParser {
       game.setImageUrl(imageUrl);
       game.setSummary(summary);
       game.setPlatforms(platforms);
-      // game.setReleaseDate(releaseDate);
+      game.setReleaseDate(releaseDates);
       game.setDevelopedBy(developedBy);
       game.setPublishedBy(publishedBy);
       game.setGenres(genres);

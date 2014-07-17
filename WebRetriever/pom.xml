@@ -77,5 +77,11 @@
   		<artifactId>easy-dao-framework</artifactId>
   		<version>1.20.1-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<version>5.1.16</version>
+  		<type>jar</type>
+  	</dependency>
   </dependencies>
 </project>

@@ -19,8 +19,11 @@ public class DAOInvokeHandler extends InterfaceInvocationHandler {
 	
 	private ISqlAnalyzerFactory sqlAnalyzerFactory;
 	private ISqlExecutorFactory sqlExecutorFactory;
-	/** the db session. */
-  private DAOSupportSession session;
+	private DAOSupportManager manager;
+  
+  public DAOInvokeHandler(DAOSupportManager manager) {
+    this.manager = manager;
+  }
 	
 	public void setSqlAnalyzerFactory(ISqlAnalyzerFactory sqlAnalyzerFactory) {
 		this.sqlAnalyzerFactory = sqlAnalyzerFactory;
@@ -30,12 +33,16 @@ public class DAOInvokeHandler extends InterfaceInvocationHandler {
 		this.sqlExecutorFactory = sqlExecutorFactory;
 	}
 	
-	public void setDAOSupportSession(DAOSupportSession session) {
-	  this.session = session;
-	}
+	public DAOSupportSession getDAOSupportSession() {
+	  return manager.getSession();
+  }
 	
 	@Override
 	protected Object override(Object proxy, Method method, Object[] args) throws Throwable {
+	  DAOSupportSession session = getDAOSupportSession();
+	  if (null == session) {
+      throw new IllegalStateException("Session is NULL!");
+    }
 		ISqlAnalyzer sqlAnalyzer = sqlAnalyzerFactory.getSqlAnalyzer(method, args, session);
 		sqlAnalyzer.setOriginalClass(this.getOriginalClass());
 		SqlStatementInfo sqlStatementInfo = sqlAnalyzer.parser(method, args);

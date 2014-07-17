@@ -19,13 +19,11 @@ public class DAOSupportSession {
   private DialectFactory dialectFactory = DialectFactory.getFactory();
   private Connection conn;
   private IDialect dialect;
-  private DAOSupportManager DAOSupportManager;
   private int id;
   private IConfiguration config;
   private IQuery query;
 
   public DAOSupportSession() {
-    this.DAOSupportManager = new DAOSupportManager(this);
   }
 
   public void setConnection(Connection conn) {
@@ -41,10 +39,6 @@ public class DAOSupportSession {
 
   public int getId() {
     return id;
-  }
-
-  public DAOSupportManager getDAOSupporManager() {
-    return DAOSupportManager;
   }
 
   public IDialect getDialect() {
