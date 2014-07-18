@@ -1,4 +1,4 @@
-package com.elminster.easydao.db.annotation;
+package com.elminster.easydao.db.id;
 
 public enum KeyPolicy {
 	NORMAL_POLICY,

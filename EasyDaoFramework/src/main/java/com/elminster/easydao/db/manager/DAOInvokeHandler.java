@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import com.elminster.easydao.db.analyze.ISqlAnalyzer;
 import com.elminster.easydao.db.analyze.ISqlAnalyzerFactory;
 import com.elminster.easydao.db.analyze.data.SqlStatementInfo;
+import com.elminster.easydao.db.executor.ExecutorProxy;
 import com.elminster.easydao.db.executor.ISqlExecutor;
 import com.elminster.easydao.db.executor.ISqlExecutorFactory;
 
@@ -48,6 +49,7 @@ public class DAOInvokeHandler extends InterfaceInvocationHandler {
 		SqlStatementInfo sqlStatementInfo = sqlAnalyzer.parser(method, args);
 		
 		ISqlExecutor sqlExecutor = sqlExecutorFactory.getSQLExecutor(sqlStatementInfo, session);
-		return sqlExecutor.execute(sqlStatementInfo, method, args);
+		ExecutorProxy exeProxy = new ExecutorProxy(sqlExecutor);
+		return exeProxy.execute(sqlStatementInfo, method, args);
 	}
 }
