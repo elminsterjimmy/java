@@ -35,6 +35,7 @@ public class ResultSetHandlerFactory {
       resultSetHandler = new CollectionResultSetHandler(genericTypes[0], resultClass);
     } else if (resultClass.isArray()) {
       // Array
+      Class<?> arrayType = resultClass.getComponentType();
     } else {
       resultSetHandler = new ObjectResultSetHandler(resultClass);
     }

@@ -3,7 +3,6 @@ package com.elminster.easydao.db.mapping;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.elminster.common.constants.Constants.StringConstants;
@@ -56,20 +55,8 @@ public class IntermediaryMappingDeleteProcessor implements IMappingProcessor {
   }
 
   private MappingSqlStatementInfo createCascadeSql(Mapping mapping, Field mappingField, DAOSupportSession session) throws MappingException {
-    Class<?> type = mappingField.getType();
-    Class<?> actualType;
     try {
-      if (Collection.class.isAssignableFrom(type)) {
-        // collection
-        actualType = ReflectUtil.getGenericFieldType(mappingField)[0];
-      } else if (type.isArray()) {
-        // array
-        actualType = type.getComponentType();
-      } else {
-        // object
-        actualType = type;
-      }
-      
+      Class<?> actualType = mapping.entity();
       Entity entity = actualType.getAnnotation(Entity.class);
       if (null == entity) {
         throw new MappingException("mapping type " + actualType + "is not an entity type.");
@@ -83,8 +70,6 @@ public class IntermediaryMappingDeleteProcessor implements IMappingProcessor {
       
       MappingSqlStatementInfo msi = new MappingSqlStatementInfo(sqlStatInfo);
       return msi;
-    } catch (ClassNotFoundException e) {
-      throw new MappingException(e);
     } catch (NoSuchMethodException e) {
       throw new MappingException(e);
     } catch (SecurityException e) {
