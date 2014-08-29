@@ -11,9 +11,9 @@ public class GameInfo extends Subject implements IGame {
   
   private List<Date> releaseDate;
   
-  private List<String> developedBy;
+  private List<IGameDevPub> developedBy;
   
-  private List<String> publishedBy;
+  private List<IGameDevPub> publishedBy;
   
   private List<String> genres;
 
@@ -33,19 +33,19 @@ public class GameInfo extends Subject implements IGame {
     this.releaseDate = releaseDate;
   }
 
-  public List<String> getDevelopedBy() {
+  public List<IGameDevPub> getDevelopedBy() {
     return developedBy;
   }
 
-  public void setDevelopedBy(List<String> developedBy) {
+  public void setDevelopedBy(List<IGameDevPub> developedBy) {
     this.developedBy = developedBy;
   }
 
-  public List<String> getPublishedBy() {
+  public List<IGameDevPub> getPublishedBy() {
     return publishedBy;
   }
 
-  public void setPublishedBy(List<String> publishedBy) {
+  public void setPublishedBy(List<IGameDevPub> publishedBy) {
     this.publishedBy = publishedBy;
   }
 

@@ -3,7 +3,7 @@ package com.elminster.retrieve.entity;
 import com.elminster.easydao.db.annotation.Column;
 import com.elminster.easydao.db.annotation.Entity;
 import com.elminster.easydao.db.annotation.Key;
-import com.elminster.easydao.db.annotation.KeyPolicy;
+import com.elminster.easydao.db.id.KeyPolicy;
 
 @Entity(tableName="t_dev_pub_info")
 public class DevPubEntity {

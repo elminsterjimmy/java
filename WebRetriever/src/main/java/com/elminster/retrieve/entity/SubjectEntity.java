@@ -2,7 +2,7 @@ package com.elminster.retrieve.entity;
 
 import com.elminster.easydao.db.annotation.Column;
 import com.elminster.easydao.db.annotation.Key;
-import com.elminster.easydao.db.annotation.KeyPolicy;
+import com.elminster.easydao.db.id.KeyPolicy;
 
 public class SubjectEntity {
 

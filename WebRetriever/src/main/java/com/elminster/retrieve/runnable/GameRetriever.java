@@ -14,13 +14,11 @@ import org.apache.commons.logging.LogFactory;
 import com.elminster.easydao.db.manager.DAOSupportManager;
 import com.elminster.easydao.db.manager.DAOSupportSession;
 import com.elminster.easydao.db.manager.DAOSupportSessionFactory;
-import com.elminster.retrieve.dao.IGameInfoDao;
 import com.elminster.retrieve.data.IGame;
 import com.elminster.retrieve.data.ISubject;
 import com.elminster.retrieve.parser.GameParser;
 import com.elminster.retrieve.parser.GameSpotLinksParser;
 import com.elminster.retrieve.parser.IGameSpotLinkParser;
-import com.elminster.retrieve.service.GameInfoService;
 import com.elminster.retrieve.service.IGameInfoService;
 import com.elminster.retrieve.util.SessionFactoryUtil;
 

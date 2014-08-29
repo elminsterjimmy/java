@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.elminster.common.util.CollectionUtil;
 import com.elminster.retrieve.data.IGame;
+import com.elminster.retrieve.data.IGameDevPub;
 import com.elminster.retrieve.entity.DevPubEntity;
 import com.elminster.retrieve.entity.GameEntity;
 import com.elminster.retrieve.entity.GenresEntity;
@@ -68,12 +69,13 @@ public class BeanUtil {
     return rtn;
   }
   
-  public static List<DevPubEntity> convert2DevPubEntity(List<String> list) {
+  public static List<DevPubEntity> convert2DevPubEntity(List<IGameDevPub> list) {
     List<DevPubEntity> rtn = new ArrayList<>();
     if (CollectionUtil.isNotEmpty(list)) {
-      for (String s : list) {
+      for (IGameDevPub devpub : list) {
         DevPubEntity entity = new DevPubEntity();
-        entity.setName(s);
+        entity.setName(devpub.getDevPubName());
+        entity.setUrl(devpub.getDevPubUrl());
         rtn.add(entity);
       }
     }

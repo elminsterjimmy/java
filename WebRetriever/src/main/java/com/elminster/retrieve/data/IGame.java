@@ -9,9 +9,9 @@ public interface IGame extends ISubject {
   
   List<Date> getReleaseDate();
 
-  List<String> getDevelopedBy();
+  List<IGameDevPub> getDevelopedBy();
   
-  List<String> getPublishedBy();
+  List<IGameDevPub> getPublishedBy();
   
   List<String> getGenres();
 }

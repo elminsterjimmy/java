@@ -19,7 +19,9 @@ import org.w3c.dom.NodeList;
 
 import com.elminster.common.util.DateUtil;
 import com.elminster.common.util.XMLUtil;
+import com.elminster.retrieve.data.GameDevPub;
 import com.elminster.retrieve.data.GameInfo;
+import com.elminster.retrieve.data.IGameDevPub;
 import com.elminster.retrieve.data.ISubject;
 import com.elminster.retrieve.exception.ParserException;
 
@@ -91,17 +93,23 @@ public class GameParser implements ISubjectParser {
       }
       NodeList depList = XMLUtil.xpathEvaluateNodeList(XPATH_TO_DEVELOP, statsNode);
       int depLength = depList.getLength();
-      List<String> developedBy = new ArrayList<>();
+      List<IGameDevPub> developedBy = new ArrayList<>();
       for (int i = 0; i < depLength; i++) {
         Node node = depList.item(i);
-        developedBy.add(XMLUtil.getNodeValue(node));
+        GameDevPub developy = new GameDevPub();
+        developy.setDevPubName(XMLUtil.getNodeValue(node));
+        developy.setDevPubUrl(XMLUtil.getNodeAttribute(node, "href"));
+        developedBy.add(developy);
       }
       NodeList publishList = XMLUtil.xpathEvaluateNodeList(XPATH_TO_PUBLISH, statsNode);
       int publishLength = publishList.getLength();
-      List<String> publishedBy = new ArrayList<>();
+      List<IGameDevPub> publishedBy = new ArrayList<>();
       for (int i = 0; i < publishLength; i++) {
         Node node = publishList.item(i);
-        publishedBy.add(XMLUtil.getNodeValue(node));
+        GameDevPub publish = new GameDevPub();
+        publish.setDevPubName(XMLUtil.getNodeValue(node));
+        publish.setDevPubUrl(XMLUtil.getNodeAttribute(node, "href"));
+        publishedBy.add(publish);
       }
       NodeList genresList = XMLUtil.xpathEvaluateNodeList(XPATH_TO_GENRES, statsNode);
       int genresLength = genresList.getLength();
