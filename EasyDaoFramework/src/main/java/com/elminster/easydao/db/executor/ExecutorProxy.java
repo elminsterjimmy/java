@@ -14,8 +14,24 @@ public class ExecutorProxy {
   
   private ISqlExecutor executor;
   
+  private Class<?> originalClass;
+  
   public ExecutorProxy(ISqlExecutor executor) {
     this.executor = executor;
+  }
+
+  /**
+   * @return the originalClass
+   */
+  public Class<?> getOriginalClass() {
+    return originalClass;
+  }
+
+  /**
+   * @param originalClass the originalClass to set
+   */
+  public void setOriginalClass(Class<?> originalClass) {
+    this.originalClass = originalClass;
   }
 
   public Object execute(SqlStatementInfo sqlStatementInfo, Method invokeMethod,
@@ -25,7 +41,7 @@ public class ExecutorProxy {
     IResultSetHandler resultSetHandler = null;
     try {
       resultSetHandler = resultSetHandlerFactory
-          .getResultSetHandler(invokeMethod);
+          .getResultSetHandler(invokeMethod, originalClass);
     } catch (Exception e) {
       throw new ExecuteException("cannot generate result set handler: " + e);
     }

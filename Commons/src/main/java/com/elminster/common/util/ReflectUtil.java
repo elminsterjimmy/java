@@ -69,6 +69,13 @@ public abstract class ReflectUtil {
     do {
       Method[] methods = clazz.getDeclaredMethods();
       CollectionUtil.mergeArray(methodList, methods);
+      Class<?>[] interfaces = clazz.getInterfaces();
+      if (null != interfaces) {
+        for (Class<?> ife : interfaces) {
+          Method[] ifMethods = getAllMethod(ife);
+          CollectionUtil.mergeArray(methodList, ifMethods);
+        }
+      }
       clazz = clazz.getSuperclass();
     } while (null != clazz);
     return (Method[]) CollectionUtil.collection2Array(methodList);
@@ -483,7 +490,7 @@ public abstract class ReflectUtil {
    * @return the generic type
    * @throws ClassNotFoundException on error
    */
-  private static Class<?>[] getGenericType(Type type) throws ClassNotFoundException {
+  public static Class<?>[] getGenericType(Type type) throws ClassNotFoundException {
     Class<?>[] rtn = null;
     if (type instanceof ParameterizedType) {
       ParameterizedType pt = (ParameterizedType) type;
@@ -491,7 +498,13 @@ public abstract class ReflectUtil {
       rtn = new Class<?>[actualTypes.length];
       for (int i = 0; i < actualTypes.length; i++) {
         Type actualType = actualTypes[i];
-        String className = actualType.toString().split(StringConstants.SPACE)[1];
+        String[] split = actualType.toString().split(StringConstants.SPACE);
+        String className;
+        if (split.length > 1) {
+          className = split[1];
+        } else {
+          return null;
+        }
         rtn[i] = Class.forName(className);
       }
     }

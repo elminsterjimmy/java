@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.elminster.easydao.db.mapping.DeletePolicy;
+import com.elminster.easydao.db.mapping.UpdatePolicy;
 import com.elminster.easydao.db.mapping.InsertPolicy;
 import com.elminster.easydao.db.mapping.MappingPolicy;
 
@@ -14,10 +14,11 @@ import com.elminster.easydao.db.mapping.MappingPolicy;
 public @interface Mapping {
 
   MappingPolicy mappingPolicy();
-  DeletePolicy deletePolicy() default DeletePolicy.NONE;
+  UpdatePolicy updatePolicy() default UpdatePolicy.NONE;
   InsertPolicy insertPolicy() default InsertPolicy.DIRECT_INSERT;
   String intermediaryTable() default "";
   String[] intermediaryControlColumn() default "";
   String[] intermediaryUncontrolColumn() default "";
+  String directRefColumn() default "";
   Class<?> entity();
 }

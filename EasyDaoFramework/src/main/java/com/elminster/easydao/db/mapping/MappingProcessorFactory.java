@@ -26,7 +26,19 @@ public class MappingProcessorFactory {
             mappingProcessor = new IntermediaryMappingDeleteProcessor();
             break;
         }
-        break;
+      case DIRECT_POLICY:
+        switch (ormType) {
+        case ORM_FETCH:
+          mappingProcessor = new DirectMappingFetchProcessor();
+          break;
+        case ORM_INSERT:
+          mappingProcessor = new DirectMappingInsertProcessor();
+          break;
+        case ORM_DELETE:
+          mappingProcessor = new DirectMappingDeleteProcessor();
+          break;
+      }
+      break;
     }
     return mappingProcessor;
   }

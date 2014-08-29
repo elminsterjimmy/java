@@ -39,8 +39,8 @@ public class IntermediaryMappingDeleteProcessor implements IMappingProcessor {
       updateIntermediaryInfo.setAnalyzedSqlParameters(keyValues);
       mappingInfo.addUpdateIntermediarySql(updateIntermediaryInfo);
       
-      DeletePolicy deletePolicy = mapping.deletePolicy();
-      if (DeletePolicy.CASCADE == deletePolicy) {
+      UpdatePolicy deletePolicy = mapping.updatePolicy();
+      if (UpdatePolicy.CASCADE == deletePolicy) {
         MappingSqlStatementInfo cascadeInfo = createCascadeSql(mapping, mappingField, session);
         cascadeInfo.setAnalyzedSqlType(SqlType.UPDATE);
         cascadeInfo.setAnalyzedSqlParameters(keyValues);

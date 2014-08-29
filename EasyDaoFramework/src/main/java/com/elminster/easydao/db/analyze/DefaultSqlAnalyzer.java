@@ -11,8 +11,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.mail.internet.ParseException;
-
 import com.elminster.common.constants.Constants.CharacterConstants;
 import com.elminster.common.constants.Constants.StringConstants;
 import com.elminster.common.constants.RegexConstants;
@@ -20,6 +18,7 @@ import com.elminster.common.util.CloseUtil;
 import com.elminster.common.util.ReflectUtil;
 import com.elminster.common.util.StringUtil;
 import com.elminster.easydao.db.analyze.expression.evaluate.Engine;
+import com.elminster.easydao.db.analyze.expression.exception.ParserException;
 import com.elminster.easydao.db.annotation.Sql;
 import com.elminster.easydao.db.annotation.SqlFile;
 import com.elminster.easydao.db.annotation.SqlParam;
@@ -35,8 +34,6 @@ import com.elminster.easydao.db.manager.DAOSupportSession;
  */
 public class DefaultSqlAnalyzer extends BaseSqlAnalyzer implements ISqlAnalyzer {
 
-  private static final char SPACE = CharacterConstants.SPACE;
-  private static final char COMMA = CharacterConstants.COMMA;
   private static final char DOT = CharacterConstants.DOT;
   private static final String SQL_REPLACEMENT = StringConstants.QUESTION;
   private static final String PARAM_KEY = StringConstants.DOLLAR;
@@ -83,7 +80,7 @@ public class DefaultSqlAnalyzer extends BaseSqlAnalyzer implements ISqlAnalyzer 
       StringBuilder builder = new StringBuilder();
       for (int i = idx + PARAM_KEY.length(); i < analyzedSql.length(); i++) {
         char ch = analyzedSql.charAt(i);
-        if (SPACE == ch || COMMA == ch || CharacterConstants.LF == ch || CharacterConstants.CR == ch) {
+        if (invalidChar(ch)) {
           break;
         } else {
           if (DOT == ch) {
@@ -127,6 +124,16 @@ public class DefaultSqlAnalyzer extends BaseSqlAnalyzer implements ISqlAnalyzer 
   }
 
   /**
+   * Only alphabetic, digit, ".", "_", "-" is valid.
+   * @param ch the character
+   * @return is invalid
+   */
+  private boolean invalidChar(char ch) {
+    return !(Character.isAlphabetic(ch) || Character.isDigit(ch) || DOT == ch || 
+        CharacterConstants.UNDER_LINE == ch || CharacterConstants.HYPHEN == ch);
+  }
+
+  /**
    * Analyze the original SQL statement.
    * @param originalSql the original SQL statement
    * @param paramaterMap the parameters
@@ -139,7 +146,7 @@ public class DefaultSqlAnalyzer extends BaseSqlAnalyzer implements ISqlAnalyzer 
     Object rst = null;
     try {
       rst = engine.execute(originalSql);
-    } catch (ParseException e) {
+    } catch (ParserException e) {
       throw new AnalyzeException(e);
     }
     return (String) rst;

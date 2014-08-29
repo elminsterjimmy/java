@@ -12,7 +12,12 @@ public class NoneIdGenerator implements IdGenerator {
   @Override
   public Serializable[] generate(DAOSupportSession session, Object obj) throws IdGenerateException {
     Object[] keyValues = AnnotationUtil.getKeyValue(obj);
-    lastId = (Serializable[]) keyValues;
+    int len = keyValues.length;
+    Serializable[] serials = new Serializable[keyValues.length];
+    for (int i = 0; i < len; i++) {
+      serials[i] = (Serializable) keyValues[i];
+    }
+    lastId = serials;
     return lastId;
   }
 

@@ -21,6 +21,8 @@ public class MappingExecutorFactory {
     case INTERMEDIARY_POLICY:
       mappingExecutor = new IntermediaryMappingExecutor(executor, session);
       break;
+    case DIRECT_POLICY:
+      
     }
     return mappingExecutor;
   }

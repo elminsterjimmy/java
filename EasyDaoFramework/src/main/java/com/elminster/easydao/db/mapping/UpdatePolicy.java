@@ -1,6 +1,6 @@
 package com.elminster.easydao.db.mapping;
 
-public enum DeletePolicy {
+public enum UpdatePolicy {
   NONE,
   CASCADE
 }

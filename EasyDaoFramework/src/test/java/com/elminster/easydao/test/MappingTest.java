@@ -83,6 +83,10 @@ public class MappingTest {
       
       dao.insert(bean1);
       
+      ORMMappingBean4 b4 = new ORMMappingBean4("bean4 name1");
+      dao.insert(b4);
+      
+      
       ORMMappingBean1 bean2 = new ORMMappingBean1();
       bean2.setName("bean1 name2");
       nameList = new ArrayList<ORMMappingBean2>();

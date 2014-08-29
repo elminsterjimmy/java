@@ -15,11 +15,16 @@ public class ResultSetHandlerFactory {
 		return instance;
 	}
 	
-	public IResultSetHandler getResultSetHandler(Method invokeMethod) throws HandleException {
+	public IResultSetHandler getResultSetHandler(Method invokeMethod, Class<?> originalClass) throws HandleException {
 		Class<?> returnClazz = invokeMethod.getReturnType();
 		Class<?>[] genericType;
     try {
       genericType = ReflectUtil.getGenericReturnType(invokeMethod);
+      if (null == genericType) {
+        if (null != originalClass.getGenericInterfaces()) {
+          genericType = ReflectUtil.getGenericType(originalClass.getGenericInterfaces()[0]);
+        }
+      }
       return getResultSetHandler(returnClazz, genericType);
     } catch (ClassNotFoundException e) {
       throw new HandleException(e);

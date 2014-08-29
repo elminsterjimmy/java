@@ -12,4 +12,8 @@ public interface MappingDao {
   public List<ORMMappingBean1> fetch(ORMMappingBean1 condition);
   
   public void delete(ORMMappingBean1 condition);
+  
+  public void insert(ORMMappingBean4 bean);
+  
+  public List<ORMMappingBean4> fetch(ORMMappingBean4 condition);
 }

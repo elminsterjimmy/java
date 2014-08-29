@@ -8,7 +8,7 @@ import com.elminster.easydao.db.annotation.Entity;
 import com.elminster.easydao.db.annotation.Key;
 import com.elminster.easydao.db.annotation.Mapping;
 import com.elminster.easydao.db.id.KeyPolicy;
-import com.elminster.easydao.db.mapping.DeletePolicy;
+import com.elminster.easydao.db.mapping.UpdatePolicy;
 import com.elminster.easydao.db.mapping.InsertPolicy;
 import com.elminster.easydao.db.mapping.MappingPolicy;
 
@@ -32,7 +32,7 @@ public class ORMMappingBean1 {
       intermediaryTable="testMappingIntermediate12",
       intermediaryControlColumn="m1Id",
       intermediaryUncontrolColumn="m2Id",
-      deletePolicy=DeletePolicy.CASCADE)
+      updatePolicy=UpdatePolicy.CASCADE)
   private List<ORMMappingBean2> nameList;
   
   @Mapping(mappingPolicy=MappingPolicy.INTERMEDIARY_POLICY,
@@ -42,6 +42,12 @@ public class ORMMappingBean1 {
       intermediaryUncontrolColumn="m2Id",
       insertPolicy=InsertPolicy.SELECT_INSERT)
   private List<ORMMappingBean3> name2List;
+  
+  @Mapping(mappingPolicy=MappingPolicy.DIRECT_POLICY,
+      entity=ORMMappingBean2.class,
+      directRefColumn="id")
+  @Column(name="t4_ref_id")
+  private ORMMappingBean4 bean4;
 
   /**
    * @return the id
@@ -97,6 +103,20 @@ public class ORMMappingBean1 {
    */
   public void setName2List(List<ORMMappingBean3> name2List) {
     this.name2List = name2List;
+  }
+
+  /**
+   * @return the bean4
+   */
+  public ORMMappingBean4 getBean4() {
+    return bean4;
+  }
+
+  /**
+   * @param bean4 the bean4 to set
+   */
+  public void setBean4(ORMMappingBean4 bean4) {
+    this.bean4 = bean4;
   }
 
   public String toString() {
